@@ -4,11 +4,12 @@
   "description": "Code based on Udemy course: \"Blockchain: Comprende Bitcoin y desarrolla tu Criptomoneda\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node index.js",
+    "start": "babel-node ./src/service/index.js",
     "nodemon": "nodemon --exec npm start",
     "lint": "eslint index.js src",
-    "lint:fix": "eslint index.js src --fix"
+    "lint:fix": "eslint index.js src --fix",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,18 @@
     "@babel/core": "^7.16.5",
     "@babel/node": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
+    "body-parser": "^1.19.1",
+    "crypto-js": "^4.1.1",
     "eslint": "^8.5.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
+    "express": "^4.17.2",
+    "jest": "^27.4.5",
     "nodemon": "^2.0.15"
+  },
+  "jest": {
+    "silent": true,
+    "verbose": true,
+    "testEnvironment": "node"
   }
 }
