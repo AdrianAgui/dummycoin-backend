@@ -1,0 +1,29 @@
+{
+  "name": "my-blockchain",
+  "version": "1.0.0",
+  "description": "Code based on Udemy course: \"Blockchain: Comprende Bitcoin y desarrolla tu Criptomoneda\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node index.js",
+    "nodemon": "nodemon --exec npm start",
+    "lint": "eslint index.js src",
+    "lint:fix": "eslint index.js src --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdrianAgui/my-blockchain.git"
+  },
+  "author": "Adrian Aguirre",
+  "license": "ISC",
+  "homepage": "https://github.com/AdrianAgui/my-blockchain#readme",
+  "dependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/node": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "nodemon": "^2.0.15"
+  }
+}
