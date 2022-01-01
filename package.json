@@ -7,8 +7,8 @@
     "start": "babel-node ./src/service/server.js",
     "start:2": "HTTP_PORT=3001 P2P_PORT=5001 PEERS=ws:localhost:5000 npm start",
     "nodemon": "nodemon --exec npm start",
-    "lint": "eslint index.js src",
-    "lint:fix": "eslint index.js src --fix",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "miner": "babel-node miner.js"
