@@ -38,15 +38,13 @@ describe("Block", () => {
 
   it("use static hash()", () => {
     hash = Block.hash(timestamp, previousBlock.hash, data, nonce);
-    const hasOutput = "16e9e12cf0c2fbb6c28861c1ce346f33aa3dc0b3e4f63aea317f8e4184ae58b7";
+    const hasOutput = "3a465ec0de1b8aa45f540eb079af6fdf5a91165b78835abe99372399e3b13378";
 
     expect(hash).toEqual(hasOutput);
   });
 
   it("use toString()", () => {
     const block = Block.mine(previousBlock, data);
-
-    console.log(block.toString());
 
     expect(typeof block.toString()).toEqual("string");
   });
