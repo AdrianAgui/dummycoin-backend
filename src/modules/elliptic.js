@@ -1,7 +1,7 @@
 import Elliptic from 'elliptic';
 import genHash from './genHash';
 
-const ec = new Elliptic.ec('secp256k1');
+const ec = new Elliptic.ec('secp256k1'); // eslint-disable-line
 
 export default {
   createKeyPair: () => ec.genKeyPair(),

@@ -36,18 +36,9 @@ app.get('/mine/transactions', (req, res) => {
   }
 });
 
-app.post("/mine", (req, res) => {
-  const {
-    body: { data },
-  } = req;
-  const block = blockchain.addBlock(data);
-
-  p2pService.sync();
-
-  res.json({
-    blocks: blockchain.blocks.length,
-    block,
-  });
+app.post('/wallet', (req, res) => {
+  const { publicKey } = new Wallet(blockchain);
+  res.json({ publicKey });
 });
 
 app.post('/transaction', (req, res) => {

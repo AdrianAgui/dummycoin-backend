@@ -12,11 +12,11 @@ class Wallet {
   }
 
   toString() {
-    const { balance, publicKey } = this;
+    const { currentBalance, publicKey } = this;
 
     return ` Wallet - 
       publicKey       : ${publicKey}
-      balance         : ${balance}
+      balance         : ${currentBalance}
     `;
   }
 
@@ -25,10 +25,9 @@ class Wallet {
   }
 
   createTransaction(recipientAddress, amount) {
-    const { blockchain: { memoryPool } } = this;
-    const balance = this.calculateBalance();
+    const { currentBalance, blockchain: { memoryPool } } = this;
 
-    if (amount > balance) throw Error(`Amount: ${amount} exceeds current balance: ${balance}`);
+    if (amount > currentBalance) throw Error(`Amount: ${amount} exceeds current balance: ${currentBalance}`);
 
     let tx = memoryPool.find(this.publicKey);
     if (tx) {
@@ -41,7 +40,7 @@ class Wallet {
     return tx;
   }
 
-  calculateBalance() {
+  get currentBalance() {
     const { blockchain: { blocks = [] }, publicKey } = this;
     let { balance } = this;
     const txs = [];
