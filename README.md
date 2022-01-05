@@ -22,10 +22,10 @@ The REST API to the Dummycoin backend is described below.
 
 ### Request
 
-`GET /blocks/`              --> Return list of blocks of our blockchain
-`GET /transactions/`        --> Return list of transactions allocated in memory pool
-`GET /mine/transactions/`   --> Mine new block and set block data with all transactions in memory pool, returns list of blocks
+`GET /blocks/`              --> Return list of blocks of our blockchain  
+`GET /transactions/`        --> Return list of transactions allocated in memory pool  
+`GET /mine/transactions/`   --> Mine new block and set block data with all transactions in memory pool, returns list of blocks  
 
-`POST /wallet/`             --> Create a new wallet, retuns public key
-`POST /transaction/`        --> Create new transaction, request data: `body: { recipient, amount }`
+`POST /wallet/`             --> Create a new wallet, retuns public key  
+`POST /transaction/`        --> Create new transaction, request data: `body: { recipient, amount }`  
 
