@@ -19,17 +19,15 @@ const miner = new Miner(blockchain, p2pService, minerWallet);
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  console.log('REQUEST');
-  console.log('Method: ', req.method);
+  console.log('REQUEST Method: ', req.method);
   console.log('Path: ', req.path);
   console.log('Port: ', PORT);
   console.log('Body: ', req.body);
-  console.log('-----------------------');
   next();
 });
 
 app.get("/", (req, res) => {
-  res.json('<h1>Welcome to DummyCoin Backend</h1>');
+  res.send('<h1>Welcome to DummyCoin Backend</h1>');
 });
 
 app.get("/blocks", (req, res) => {
@@ -51,8 +49,8 @@ app.get('/mine/transactions', (req, res) => {
 });
 
 app.get('/wallet', (req, res) => {
-  const { publicKey } = wallet;
-  res.json({ publicKey });
+  const { publicKey, balance  } = wallet;
+  res.json({ publicKey, balance});
 });
 
 app.post('/wallet', (req, res) => {
