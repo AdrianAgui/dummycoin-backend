@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.json('<h1>Welcome to DummyCoin Backend</h1>>');
+  res.json('<h1>Welcome to DummyCoin Backend</h1>');
 });
 
 app.get("/blocks", (req, res) => {
@@ -48,6 +48,11 @@ app.get('/mine/transactions', (req, res) => {
   } catch (error) {
     res.json({ error: error.message });
   }
+});
+
+app.get('/wallet', (req, res) => {
+  const { publicKey } = wallet;
+  res.json({ publicKey });
 });
 
 app.post('/wallet', (req, res) => {
