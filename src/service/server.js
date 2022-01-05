@@ -6,7 +6,7 @@ import Wallet from "../wallet";
 import P2PService, { MESSAGE } from "./p2p";
 import Miner from '../miner';
 
-const { HTTP_PORT = 3000 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -17,6 +17,15 @@ const p2pService = new P2PService(blockchain);
 const miner = new Miner(blockchain, p2pService, minerWallet);
 
 app.use(bodyParser.json());
+
+app.use((req, res) => {
+  console.log('REQUEST');
+  console.log('Method: ', req.method);
+  console.log('Path: ', req.path);
+  console.log('Port: ', PORT);
+  console.log('Body: ', req.body);
+  console.log('-----------------------');
+});
 
 app.get("/blocks", (req, res) => {
   res.json(blockchain.blocks);
@@ -53,7 +62,7 @@ app.post('/transaction', (req, res) => {
   }
 });
 
-app.listen(HTTP_PORT, () => {
-  console.log(`Service HTTP:${HTTP_PORT} listening...`);
+app.listen(PORT, () => {
+  console.log(`Service HTTP:${PORT} listening...`);
   p2pService.listen();
 });
