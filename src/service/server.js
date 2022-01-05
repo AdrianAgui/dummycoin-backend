@@ -18,13 +18,18 @@ const miner = new Miner(blockchain, p2pService, minerWallet);
 
 app.use(bodyParser.json());
 
-app.use((req, res) => {
+app.use((req, res, next) => {
   console.log('REQUEST');
   console.log('Method: ', req.method);
   console.log('Path: ', req.path);
   console.log('Port: ', PORT);
   console.log('Body: ', req.body);
   console.log('-----------------------');
+  next();
+});
+
+app.get("/", (req, res) => {
+  res.json('<h1>Welcome to DummyCoin Backend</h1>>');
 });
 
 app.get("/blocks", (req, res) => {
@@ -60,6 +65,12 @@ app.post('/transaction', (req, res) => {
   } catch (error) {
     res.json({ error: error.message });
   }
+});
+
+app.use((req, res) => {
+  res.status(404).json({
+    error: 'Not found'
+  })
 });
 
 app.listen(PORT, () => {
