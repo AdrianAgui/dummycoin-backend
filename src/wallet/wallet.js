@@ -4,8 +4,8 @@ import Transaction from './transaction';
 const INITIAL_BALANCE = 100;
 
 class Wallet {
-  constructor(blockchain) {
-    this.balance = INITIAL_BALANCE;
+  constructor(blockchain, initialBalance = INITIAL_BALANCE) {
+    this.balance = initialBalance;
     this.keyPair = elliptic.createKeyPair();
     this.publicKey = this.keyPair.getPublic().encode('hex');
     this.blockchain = blockchain;
@@ -25,7 +25,8 @@ class Wallet {
   }
 
   createTransaction(recipientAddress, amount) {
-    const { balance, blockchain: { memoryPool } } = this;
+    const { blockchain: { memoryPool } } = this;
+    const balance = this.calculateBalance();
 
     if (amount > balance) throw Error(`Amount: ${amount} exceeds current balance: ${balance}`);
 
@@ -38,6 +39,37 @@ class Wallet {
     }
 
     return tx;
+  }
+
+  calculateBalance() {
+    const { blockchain: { blocks = [] }, publicKey } = this;
+    let { balance } = this;
+    const txs = [];
+
+    blocks.forEach(({ data = [] }) => {
+      if (Array.isArray(data)) data.forEach((tx) => txs.push(tx));
+    });
+
+    const walletInputTxs = txs.filter((tx) => tx.input.address === publicKey);
+    let timestamp = 0;
+
+    if (walletInputTxs.length > 0) {
+      const recentInputTx = walletInputTxs
+        .sort((a, b) => a.input.timestamp - b.input.timestamp)
+        .pop();
+      balance = recentInputTx.outputs.find(({ address }) => address === publicKey).amount;
+      timestamp = recentInputTx.input.timestamp;
+    }
+
+    txs
+      .filter(({ input }) => input.timestamp > timestamp)
+      .forEach(({ outputs }) => {
+        outputs.forEach(({ address, amount }) => {
+          if (address === publicKey) balance += amount;
+        });
+      });
+
+    return balance;
   }
 }
 
