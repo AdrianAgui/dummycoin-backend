@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from 'cors';
 
 import Blockchain from "../blockchain";
 import Wallet from "../wallet";
@@ -7,7 +8,7 @@ import P2PService, { MESSAGE } from "./p2p";
 import Miner from '../miner';
 
 const { PORT = 3000 } = process.env;
-const endpoint = (arg) => `/api/v1/${arg}`
+const endpoint = (arg) => `/api/v1/${arg}`;
 
 const app = express();
 
@@ -18,6 +19,7 @@ const p2pService = new P2PService(blockchain);
 const miner = new Miner(blockchain, p2pService, minerWallet);
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use((req, res, next) => {
   console.log('REQUEST Method: ', req.method);
@@ -50,8 +52,8 @@ app.get(endpoint('/mine/transactions'), (req, res) => {
 });
 
 app.get(endpoint('wallet'), (req, res) => {
-  const { publicKey, balance  } = wallet;
-  res.json({ publicKey, balance});
+  const { publicKey, balance } = wallet;
+  res.json({ publicKey, balance });
 });
 
 app.post(endpoint('/wallet'), (req, res) => {
@@ -74,7 +76,7 @@ app.post(endpoint('/transaction'), (req, res) => {
 app.use((req, res) => {
   res.status(404).json({
     error: 'Not found'
-  })
+  });
 });
 
 app.listen(PORT, () => {
