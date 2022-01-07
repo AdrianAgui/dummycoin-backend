@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get(endpoint, (req, res) => {
+app.get(endpoint(''), (req, res) => {
   res.send('<h1>Welcome to DummyCoin Backend</h1>');
 });
 
