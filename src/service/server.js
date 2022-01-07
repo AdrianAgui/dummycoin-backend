@@ -7,6 +7,7 @@ import P2PService, { MESSAGE } from "./p2p";
 import Miner from '../miner';
 
 const { PORT = 3000 } = process.env;
+const endpoint = (arg) => `/api/v1/${arg}`
 
 const app = express();
 
@@ -26,20 +27,20 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
+app.get(endpoint, (req, res) => {
   res.send('<h1>Welcome to DummyCoin Backend</h1>');
 });
 
-app.get("/blocks", (req, res) => {
+app.get(endpoint('blocks'), (req, res) => {
   res.json(blockchain.blocks);
 });
 
-app.get('/transactions', (req, res) => {
+app.get(endpoint('/transactions'), (req, res) => {
   const { memoryPool: { transactions } } = blockchain;
   res.json(transactions);
 });
 
-app.get('/mine/transactions', (req, res) => {
+app.get(endpoint('/mine/transactions'), (req, res) => {
   try {
     miner.mine();
     res.redirect('/blocks');
@@ -48,17 +49,17 @@ app.get('/mine/transactions', (req, res) => {
   }
 });
 
-app.get('/wallet', (req, res) => {
+app.get(endpoint('wallet'), (req, res) => {
   const { publicKey, balance  } = wallet;
   res.json({ publicKey, balance});
 });
 
-app.post('/wallet', (req, res) => {
+app.post(endpoint('/wallet'), (req, res) => {
   const { publicKey } = new Wallet(blockchain);
   res.json({ publicKey });
 });
 
-app.post('/transaction', (req, res) => {
+app.post(endpoint('/transaction'), (req, res) => {
   const { body: { recipient, amount } } = req;
 
   try {
