@@ -37,15 +37,15 @@ app.get(endpoint('blocks'), (req, res) => {
   res.json(blockchain.blocks);
 });
 
-app.get(endpoint('/transactions'), (req, res) => {
+app.get(endpoint('transactions'), (req, res) => {
   const { memoryPool: { transactions } } = blockchain;
   res.json(transactions);
 });
 
-app.get(endpoint('/mine/transactions'), (req, res) => {
+app.get(endpoint('mine/transactions'), (req, res) => {
   try {
     miner.mine();
-    res.redirect('/blocks');
+    res.redirect('blocks');
   } catch (error) {
     res.json({ error: error.message });
   }
@@ -56,12 +56,12 @@ app.get(endpoint('wallet'), (req, res) => {
   res.json({ publicKey, balance });
 });
 
-app.post(endpoint('/wallet'), (req, res) => {
+app.post(endpoint('wallet'), (req, res) => {
   const { publicKey } = new Wallet(blockchain);
   res.json({ publicKey });
 });
 
-app.post(endpoint('/transaction'), (req, res) => {
+app.post(endpoint('transaction'), (req, res) => {
   const { body: { recipient, amount } } = req;
 
   try {
