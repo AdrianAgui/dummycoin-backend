@@ -34,12 +34,12 @@ app.get(endpoint(''), (req, res) => {
 });
 
 app.get(endpoint('blocks'), (req, res) => {
-  res.json(blockchain.blocks);
+  res.json({ length: blockchain.blocksLength(), blocks: blockchain.blocks });
 });
 
 app.get(endpoint('transactions'), (req, res) => {
   const { memoryPool: { transactions } } = blockchain;
-  res.json(transactions);
+  res.json({ length: transactions.length, txs: transactions });
 });
 
 app.get(endpoint('mine/transactions'), (req, res) => {

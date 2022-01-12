@@ -20,15 +20,15 @@ class Block {
 
   static mine(previousBlock, data) {
     const previousHash = previousBlock.hash;
+    const difficulty = adjustDifficulty(previousBlock);
+
     let timestamp;
     let hash;
     let nonce = 0;
-    let { difficulty } = previousBlock;
 
     do {
       timestamp = Date.now();
       nonce += 1;
-      difficulty = adjustDifficulty(previousBlock, timestamp);
       hash = Block.hash(timestamp, previousHash, data, nonce, difficulty);
     } while (hash.substring(0, difficulty) !== "0".repeat(difficulty));
 
