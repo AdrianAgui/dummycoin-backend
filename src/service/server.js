@@ -45,7 +45,7 @@ app.get(endpoint('transactions'), (req, res) => {
 app.get(endpoint('mine/transactions'), (req, res) => {
   try {
     miner.mine();
-    res.redirect('blocks');
+    res.redirect(endpoint('blocks'));
   } catch (error) {
     res.json({ error: error.message });
   }
@@ -74,6 +74,7 @@ app.post(endpoint('transaction'), (req, res) => {
 });
 
 app.use((req, res) => {
+  console.log(req.path);
   res.status(404).json({
     error: 'Not found'
   });
