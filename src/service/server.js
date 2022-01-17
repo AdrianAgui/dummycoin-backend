@@ -13,7 +13,7 @@ const endpoint = (arg) => `/api/v1/${arg}`;
 const app = express();
 
 const blockchain = new Blockchain();
-const wallet = new Wallet(blockchain);
+const wallets = [];
 const minerWallet = new Wallet(blockchain, 0);
 const p2pService = new P2PService(blockchain);
 const miner = new Miner(blockchain, p2pService, minerWallet);
@@ -52,19 +52,33 @@ app.get(endpoint('mine/transactions'), (req, res) => {
 });
 
 app.get(endpoint('wallet'), (req, res) => {
-  const { publicKey, balance } = wallet;
-  res.json({ publicKey, balance });
+  const { query: { key } } = req;
+  const wallet = wallets.find((w) => w.publicKey === key);
+  if (wallet) {
+    const { currentBalance } = wallet;
+    res.json({ key, currentBalance });
+  } else {
+    res.status(404).json({
+      error: 'Wallet not found'
+    });
+  }
+});
+
+app.get(endpoint('wallets'), (req, res) => {
+  res.json({ wallets });
 });
 
 app.post(endpoint('wallet'), (req, res) => {
-  const { publicKey } = new Wallet(blockchain);
+  const wallet = new Wallet(blockchain);
+  wallets.push(wallet);
+  const { publicKey } = wallet;
   res.json({ publicKey });
 });
 
 app.post(endpoint('transaction'), (req, res) => {
-  const { body: { recipient, amount } } = req;
-
+  const { body: { sender, recipient, amount } } = req;
   try {
+    const wallet = wallets.find((w) => w.publicKey === sender);
     const tx = wallet.createTransaction(recipient, amount);
     p2pService.broadcast(MESSAGE.TX, tx);
     res.json(tx);
