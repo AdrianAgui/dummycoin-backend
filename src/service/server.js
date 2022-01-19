@@ -79,9 +79,15 @@ app.post(endpoint('transaction'), (req, res) => {
   const { body: { sender, recipient, amount } } = req;
   try {
     const wallet = wallets.find((w) => w.publicKey === sender);
-    const tx = wallet.createTransaction(recipient, amount);
-    p2pService.broadcast(MESSAGE.TX, tx);
-    res.json(tx);
+    if (wallet) {
+      const tx = wallet.createTransaction(recipient, amount);
+      p2pService.broadcast(MESSAGE.TX, tx);
+      res.json(tx);
+    } else {
+      res.status(404).json({
+        error: 'Wallet not found'
+      });
+    }
   } catch (error) {
     res.json({ error: error.message });
   }

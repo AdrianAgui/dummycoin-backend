@@ -37,7 +37,6 @@ class P2PService {
         console.error(`[ws:message] error ${error}`);
         throw Error(error);
       }
-      console.log({ type, value });
     });
 
     socket.send(

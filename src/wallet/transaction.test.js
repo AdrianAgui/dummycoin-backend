@@ -56,7 +56,7 @@ describe('Transaction', () => {
     it('does not create the transaction', () => {
       expect(() => {
         transaction = Transaction.create(wallet, recipientAddress, amount);
-      }).toThrowError(`Amount ${amount} exceeds balance`);
+      }).toThrowError(`Amount: ${amount} exceeds balance`);
     });
   });
 

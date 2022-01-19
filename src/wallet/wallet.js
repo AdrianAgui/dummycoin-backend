@@ -1,4 +1,4 @@
-import { elliptic, genHash } from "../modules";
+import { elliptic, genHash } from '../modules';
 import Transaction from './transaction';
 
 const INITIAL_BALANCE = 100;
@@ -14,7 +14,7 @@ class Wallet {
   toString() {
     const { currentBalance, publicKey } = this;
 
-    return ` Wallet - 
+    return ` Wallet -
       publicKey       : ${publicKey}
       balance         : ${currentBalance}
     `;
@@ -67,6 +67,8 @@ class Wallet {
           if (address === publicKey) balance += amount;
         });
       });
+
+    this.balance = balance;
 
     return balance;
   }

@@ -13,7 +13,7 @@ class Transaction {
   static create(senderWallet, recipientAddress, amount) {
     const { balance, publicKey } = senderWallet;
 
-    if (amount > balance) throw Error(`Amount ${amount} exceeds balance`);
+    if (amount > balance) throw Error(`Amount: ${amount} exceeds balance`);
 
     const transaction = new Transaction();
 
@@ -49,7 +49,7 @@ class Transaction {
   update(senderWallet, recipientAddress, amount) {
     const senderOutput = this.outputs.find((o) => o.address === senderWallet.publicKey);
 
-    if (amount > senderOutput.amount) throw Error(`Amount ${amount} exceeds balance`);
+    if (amount > senderOutput.amount) throw Error(`Amount: ${amount} exceeds balance`);
 
     senderOutput.amount -= amount;
     this.outputs.push({ amount, address: recipientAddress });
