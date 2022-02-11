@@ -1,8 +1,6 @@
 # Dummycoin Blockchain Network
 
-Code based on Udemy course: "Blockchain: Comprende Bitcoin y desarrolla tu Criptomoneda"
-
-Introduction WIP
+Project based on blockchain technology which simulates the architecture of Bitcoin, it is a fully functional network with features such as mining blocks, creating transactions and generating wallets, it have an API that you can consume.
 
 ## Install
 
