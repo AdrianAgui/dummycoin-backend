@@ -1,11 +1,11 @@
-import express from "express";
-import bodyParser from "body-parser";
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import express from 'express';
 
-import Blockchain from "../blockchain";
-import Wallet from "../wallet";
-import P2PService, { MESSAGE } from "./p2p";
+import Blockchain from '../blockchain';
 import Miner from '../miner';
+import Wallet from '../wallet';
+import P2PService, { MESSAGE } from './p2p';
 
 const { PORT = 3000 } = process.env;
 const endpoint = (arg) => `/api/v1/${arg}`;
@@ -38,7 +38,9 @@ app.get(endpoint('blocks'), (req, res) => {
 });
 
 app.get(endpoint('transactions'), (req, res) => {
-  const { memoryPool: { transactions } } = blockchain;
+  const {
+    memoryPool: { transactions }
+  } = blockchain;
   res.json({ length: transactions.length, txs: transactions });
 });
 
@@ -52,7 +54,9 @@ app.get(endpoint('mine/transactions'), (req, res) => {
 });
 
 app.get(endpoint('wallet'), (req, res) => {
-  const { query: { key } } = req;
+  const {
+    query: { key }
+  } = req;
   const wallet = wallets.find((w) => w.publicKey === key);
   if (wallet) {
     const { currentBalance } = wallet;
@@ -76,7 +80,9 @@ app.post(endpoint('wallet'), (req, res) => {
 });
 
 app.post(endpoint('transaction'), (req, res) => {
-  const { body: { sender, recipient, amount } } = req;
+  const {
+    body: { sender, recipient, amount }
+  } = req;
   try {
     const wallet = wallets.find((w) => w.publicKey === sender);
     if (wallet) {
@@ -104,3 +110,5 @@ app.listen(PORT, () => {
   console.log(`Service HTTP:${PORT} listening...`);
   p2pService.listen();
 });
+
+module.exports = app;
