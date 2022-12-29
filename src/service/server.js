@@ -110,5 +110,3 @@ app.listen(PORT, () => {
   console.log(`Service HTTP:${PORT} listening...`);
   p2pService.listen();
 });
-
-module.exports = app;
